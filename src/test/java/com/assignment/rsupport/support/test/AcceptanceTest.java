@@ -1,5 +1,7 @@
 package com.assignment.rsupport.support.test;
 
+import com.assignment.rsupport.noticejava.domain.user.User;
+import com.assignment.rsupport.noticejava.domain.user.UserRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +16,23 @@ public abstract class AcceptanceTest extends BaseTest {
     @Autowired
     private TestRestTemplate template;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public TestRestTemplate template() {
         return this.template;
+    }
+
+    protected User defaultUser() {
+        return userRepository.findByUserId(TESTER).get();
+    }
+
+    public TestRestTemplate basicAuthTemplate() {
+        return basicAuthTemplate(defaultUser());
+    }
+
+    private TestRestTemplate basicAuthTemplate(User defaultUser) {
+        return this.template.withBasicAuth(defaultUser.getUserId(), defaultUser.getPassword());
     }
 
 }
