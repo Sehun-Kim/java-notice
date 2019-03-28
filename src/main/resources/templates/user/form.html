@@ -1,0 +1,29 @@
+{{#partial "contents"}}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Sign Up</h1>
+</div>
+
+<div class="container">
+    <form action="/users" method="post">
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input type="text" name="userName" class="form-control" id="userName" placeholder="Enter ID">
+        </div>
+
+        <div class="form-group">
+            <label for="userId">User ID</label>
+            <input type="text" name="userId" class="form-control" id="userId" placeholder="Enter ID">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{{/partial}}
+
+{{>base}}
