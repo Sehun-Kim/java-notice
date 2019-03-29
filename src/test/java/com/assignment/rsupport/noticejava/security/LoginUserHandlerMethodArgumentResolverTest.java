@@ -47,10 +47,10 @@ public class LoginUserHandlerMethodArgumentResolverTest extends BaseTest {
 
     @Test
     public void loginUser_success() throws Exception {
-        when(request.getAttribute(HttpSessionUtil.USER_SESSION, WebRequest.SCOPE_SESSION)).thenReturn(TEST_USER);
+        when(request.getAttribute(HttpSessionUtil.USER_SESSION, WebRequest.SCOPE_SESSION)).thenReturn(TEST_USER_1);
         User loginUser = (User) loginUserHandlerMethodArgumentResolver.resolveArgument(parameter, null, request, null);
 
-        softly.assertThat(loginUser).isEqualTo(TEST_USER);
+        softly.assertThat(loginUser).isEqualTo(TEST_USER_1);
     }
 
     @Test(expected = UnAuthenticationException.class)

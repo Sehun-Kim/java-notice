@@ -1,0 +1,25 @@
+{{#partial "contents"}}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Update Notice</h1>
+</div>
+
+<div class="container">
+    <form action="/notices" method="post">
+        {{# notice }}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" class="form-control" id="title" placeholder="Title" value="{{ title }}">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea class="form-control" name="content" id="content" rows="3">{{ content }}</textarea>
+        </div>
+        {{/ notice }}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{{/partial}}
+
+{{>base}}

@@ -1,6 +1,5 @@
 package com.assignment.rsupport.noticejava.security;
 
-import com.assignment.rsupport.noticejava.domain.user.User;
 import com.assignment.rsupport.noticejava.exception.UnAuthenticationException;
 import com.assignment.rsupport.noticejava.service.UserService;
 import com.assignment.rsupport.support.test.BaseTest;
@@ -27,8 +26,8 @@ public class BasicAuthInterceptorTest extends BaseTest {
 
     @Test
     public void preHandle_fail() throws Exception {
-        String userId = TEST_USER.getUserId();
-        String password = TEST_USER.getPassword();
+        String userId = TEST_USER_1.getUserId();
+        String password = TEST_USER_1.getPassword();
         MockHttpServletRequest mockRequest = generateBasicAuthHttpRequest(userId, password);
 
         when(userService.login(userId, password)).thenThrow(UnAuthenticationException.class);
@@ -39,14 +38,14 @@ public class BasicAuthInterceptorTest extends BaseTest {
 
     @Test
     public void preHandle_success() throws Exception {
-        String userId = TEST_USER.getUserId();
-        String password = TEST_USER.getPassword();
+        String userId = TEST_USER_1.getUserId();
+        String password = TEST_USER_1.getPassword();
         MockHttpServletRequest mockRequest = generateBasicAuthHttpRequest(userId, password);
 
-        when(userService.login(userId, password)).thenReturn(TEST_USER);
+        when(userService.login(userId, password)).thenReturn(TEST_USER_1);
 
         basicAuthInterceptor.preHandle(mockRequest, null, null);
-        softly.assertThat(mockRequest.getSession().getAttribute(HttpSessionUtil.USER_SESSION)).isEqualTo(TEST_USER);
+        softly.assertThat(mockRequest.getSession().getAttribute(HttpSessionUtil.USER_SESSION)).isEqualTo(TEST_USER_1);
     }
 
     // basic auth를 요청하는 가짜 request 생성

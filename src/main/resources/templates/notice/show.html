@@ -1,0 +1,23 @@
+{{#partial "contents"}}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Show Notice</h1>
+</div>
+
+<div class="container">
+    <div class="jumbotron">
+        {{# notice }}
+        <h1 class="display-4">{{ title }}</h1>
+        <p class="lead">{{ content }}</p>
+        <hr class="my-4">
+        <p>created time : {{ formattedCreateDate }}</p>
+        <p>writer : {{ writer.userName }}</p>
+        <p>modified time : {{ formattedModifiedDate }}</p>
+
+        <a class="btn btn-primary btn-lg" href="/notices/{{id}}/form" role="button">Modified</a>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Delete</a>
+        {{/ notice}}
+    </div>
+</div>
+{{/partial}}
+
+{{>base}}

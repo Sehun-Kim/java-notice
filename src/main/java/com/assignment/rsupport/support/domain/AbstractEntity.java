@@ -1,5 +1,6 @@
 package com.assignment.rsupport.support.domain;
 
+import com.assignment.rsupport.noticejava.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -59,7 +60,6 @@ public abstract class AbstractEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractEntity that = (AbstractEntity) o;
         return id == that.id;
