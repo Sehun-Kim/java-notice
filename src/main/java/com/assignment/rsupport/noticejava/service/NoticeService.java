@@ -3,7 +3,7 @@ package com.assignment.rsupport.noticejava.service;
 import com.assignment.rsupport.noticejava.domain.notice.Notice;
 import com.assignment.rsupport.noticejava.domain.notice.NoticeRepository;
 import com.assignment.rsupport.noticejava.domain.user.User;
-import com.assignment.rsupport.noticejava.exception.UnAuthorization;
+import com.assignment.rsupport.noticejava.exception.UnAuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class NoticeService {
@@ -34,7 +33,7 @@ public class NoticeService {
     public Notice findByIdWithWriter(long noticeId, User loginedUser) {
         return noticeRepository.findById(noticeId)
                 .filter(notice -> notice.isWriter(loginedUser))
-                .orElseThrow(UnAuthorization::new);
+                .orElseThrow(UnAuthorizationException::new);
     }
 
     public Page<Notice> findAll(Pageable pageable) {

@@ -40,6 +40,6 @@ public class LoginAcceptanceTest extends AcceptanceTest {
 
         ResponseEntity<String> responseEntity = template().postForEntity("/login", htmlFormDataBuilder.build(), String.class);
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        softly.assertThat(responseEntity.getHeaders().getLocation().getPath().startsWith("/notices")).isTrue();
+        softly.assertThat(responseEntity.getHeaders().getLocation().getPath().startsWith("/")).isTrue();
     }
 }

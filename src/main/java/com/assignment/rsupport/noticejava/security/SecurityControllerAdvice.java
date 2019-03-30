@@ -1,7 +1,7 @@
 package com.assignment.rsupport.noticejava.security;
 
 import com.assignment.rsupport.noticejava.exception.UnAuthenticationException;
-import com.assignment.rsupport.noticejava.exception.UnAuthorization;
+import com.assignment.rsupport.noticejava.exception.UnAuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class SecurityControllerAdvice {
         return "user/login";
     }
 
-    @ExceptionHandler(UnAuthorization.class)
+    @ExceptionHandler(UnAuthorizationException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     public void unAuthorization() {
         logger.debug("UnAuthorizationException is happened!");
