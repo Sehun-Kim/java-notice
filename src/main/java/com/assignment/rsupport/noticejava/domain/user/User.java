@@ -7,10 +7,10 @@ import javax.persistence.Entity;
 
 @Entity
 public class User extends AbstractEntity {
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String userId;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String userName;
 
     @Column(nullable = false)

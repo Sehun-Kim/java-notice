@@ -1,7 +1,7 @@
 package com.assignment.rsupport.noticejava.web;
 
+import com.assignment.rsupport.noticejava.domain.notice.Notice;
 import com.assignment.rsupport.noticejava.domain.notice.NoticeRepository;
-import com.assignment.rsupport.noticejava.domain.user.User;
 import com.assignment.rsupport.support.test.AcceptanceTest;
 import com.assignment.rsupport.support.test.HtmlFormDataBuilder;
 import org.junit.Test;
@@ -22,8 +22,7 @@ public class NoticeAcceptanceTest extends AcceptanceTest {
     @Test
     public void createForm_fail() {
         ResponseEntity<String> responseEntity = template().getForEntity("/notices/form", String.class);
-        softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        softly.assertThat(responseEntity.getHeaders().getLocation().getPath().startsWith("/login")).isTrue();
+        softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
@@ -37,11 +36,13 @@ public class NoticeAcceptanceTest extends AcceptanceTest {
     public void create() {
         htmlFormDataBuilder = HtmlFormDataBuilder.urlEncodedForm()
                 .addParameter("title", "test notice")
-                .addParameter("contents", "this is test");
+                .addParameter("content", "this is test");
 
         ResponseEntity<String> responseEntity = basicAuthTemplate().postForEntity("/notices", htmlFormDataBuilder.build(), String.class);
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        softly.assertThat(noticeRepository.findByWriterId(1L).isPresent()).isTrue();
+        Notice notice = noticeRepository.findById(2L).get();
+        logger.debug("notice : {}", notice);
+        softly.assertThat(noticeRepository.findById(2L).isPresent()).isTrue();
         softly.assertThat(responseEntity.getHeaders().getLocation().getPath()).startsWith("/notices");
     }
 
@@ -49,15 +50,13 @@ public class NoticeAcceptanceTest extends AcceptanceTest {
     public void show() {
         ResponseEntity<String> responseEntity = template().getForEntity("/notices/1", String.class);
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(responseEntity.getBody().contains("테스트입니다.")).isTrue();
         logger.debug("body : {}", responseEntity.getBody());
     }
 
     @Test
     public void updateForm_not_match_writer() {
         ResponseEntity<String> responseEntity = basicAuthTemplate(TEST_USER_2).getForEntity("/notices/1/form", String.class);
-        softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        softly.assertThat(responseEntity.getHeaders().getLocation().getPath().startsWith("/notices")).isTrue();
+        softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
     @Test
@@ -78,5 +77,20 @@ public class NoticeAcceptanceTest extends AcceptanceTest {
         logger.debug("update : {}", noticeRepository.findById(1L).get());
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         softly.assertThat(responseEntity.getHeaders().getLocation().getPath().startsWith("/notices/1")).isTrue();
+    }
+
+    @Test
+    public void delete_by_not_owner() {
+        htmlFormDataBuilder = HtmlFormDataBuilder.urlEncodedForm().delete();
+        ResponseEntity<String> responseEntity = basicAuthTemplate(TEST_USER_2).postForEntity("/notices/1", htmlFormDataBuilder.build(), String.class);
+        softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    public void delete_by_owner() {
+        htmlFormDataBuilder = HtmlFormDataBuilder.urlEncodedForm().delete();
+        ResponseEntity<String> responseEntity = basicAuthTemplate(TEST_USER_1).postForEntity("/notices/1", htmlFormDataBuilder.build(), String.class);
+        softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        softly.assertThat(noticeRepository.findById(1L).isPresent()).isFalse();
     }
 }

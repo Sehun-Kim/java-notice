@@ -55,4 +55,11 @@ public class NoticeController {
         noticeService.update(noticeId, loginedUser, updateNotice);
         return "redirect:/notices/" + noticeId;
     }
+
+    @DeleteMapping("/{id}")
+    public String delete(@LoginUser User loginedUser, @PathVariable("id") long noticeId) {
+        noticeService.delete(noticeId, loginedUser);
+        return "redirect:/notices";
+    }
+
 }

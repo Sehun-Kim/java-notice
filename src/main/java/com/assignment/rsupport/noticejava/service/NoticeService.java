@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class NoticeService {
     private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
-    
+
     @Autowired
     private NoticeRepository noticeRepository;
 
@@ -39,10 +39,13 @@ public class NoticeService {
         return noticeRepository.findAll();
     }
 
-    @Transactional // 사실 안 붙혀도 상관 없다.
+    @Transactional
     public Notice update(long noticeId, User loginedUser, Notice updateNotice) {
-        Notice original = findByIdWithWriter(noticeId, loginedUser);
-        original.update(updateNotice);
-        return noticeRepository.save(original);
+        return findByIdWithWriter(noticeId, loginedUser)
+                .update(updateNotice);
+    }
+
+    public void delete(long noticeId, User loginedUser) {
+        noticeRepository.delete(findByIdWithWriter(noticeId, loginedUser));
     }
 }

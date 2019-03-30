@@ -56,9 +56,10 @@ public class Notice extends AbstractEntity {
         return this.writer.equals(loginedUser);
     }
 
-    public void update(Notice updateNotice) {
+    public Notice update(Notice updateNotice) {
         this.title = updateNotice.title;
         this.content = updateNotice.content;
+        return this;
     }
 
     @Override
