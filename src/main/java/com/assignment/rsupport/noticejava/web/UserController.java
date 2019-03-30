@@ -25,9 +25,7 @@ public class UserController {
 
     @PostMapping
     public String create(User user) {
-        User createdUser = userService.add(user);
-        logger.debug("createdUser : {}", createdUser);
-
+        userService.add(user);
         return "redirect:/login";
     }
 }

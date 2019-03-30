@@ -24,7 +24,7 @@ public class LoginController {
     public String login(String userId, String password, HttpSession session) {
         try {
             session.setAttribute(HttpSessionUtil.USER_SESSION, userService.login(userId, password));
-            return "redirect:/notices";
+            return "redirect:/";
         } catch (UnAuthenticationException e) {
             return "redirect:/login";
         }
@@ -33,6 +33,6 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(HttpSessionUtil.USER_SESSION);
-        return "redirect:/notices";
+        return "redirect:/";
     }
 }

@@ -43,7 +43,7 @@ public class NoticeAcceptanceTest extends AcceptanceTest {
         Notice notice = noticeRepository.findById(2L).get();
         logger.debug("notice : {}", notice);
         softly.assertThat(noticeRepository.findById(2L).isPresent()).isTrue();
-        softly.assertThat(responseEntity.getHeaders().getLocation().getPath()).startsWith("/notices");
+        softly.assertThat(responseEntity.getHeaders().getLocation().getPath()).startsWith("/");
     }
 
     @Test

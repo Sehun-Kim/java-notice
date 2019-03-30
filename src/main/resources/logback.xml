@@ -8,6 +8,7 @@
     </appender>
 
     <logger name="com.assignment.rsupport.noticejava" level="DEBUG"/>
+    <logger name="com.assignment.rsupport.support" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

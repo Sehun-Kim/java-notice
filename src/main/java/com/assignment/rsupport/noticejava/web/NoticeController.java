@@ -12,19 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping(value = {"/notices", "/"})
+@RequestMapping("/notices")
 public class NoticeController {
     private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 
     @Autowired
     private NoticeService noticeService;
-
-    @GetMapping
-    public String list(Model model) {
-        logger.debug("notices!!");
-        model.addAttribute("notices", noticeService.findAll());
-        return "index";
-    }
 
     @GetMapping("/form")
     public String form(@LoginUser User loginedUser) {
@@ -35,7 +28,7 @@ public class NoticeController {
     @PostMapping
     public String create(@LoginUser User loginedUser, Notice notice) {
         noticeService.add(loginedUser, notice);
-        return "redirect:/notices";
+        return "redirect:/";
     }
 
     @GetMapping("/{id}")
@@ -59,7 +52,7 @@ public class NoticeController {
     @DeleteMapping("/{id}")
     public String delete(@LoginUser User loginedUser, @PathVariable("id") long noticeId) {
         noticeService.delete(noticeId, loginedUser);
-        return "redirect:/notices";
+        return "redirect:/";
     }
 
 }
