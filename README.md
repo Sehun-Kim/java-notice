@@ -24,6 +24,16 @@
 
 ---
 
+## 구현 기능
+
+* [x] 회원가입, 로그인/로그아웃
+* [x] 공지사항 조회(회원/비회원)
+* [x] 공지사항 등록(회원)
+* [x] 공지사항 수정,삭제(작성자)
+* [x] 페이징
+
+---
+
 ## Environment
 - Java 8
 - Gradle
@@ -37,29 +47,28 @@
 ---
 ## 프로젝트 빌드, 실행방법
 
-#### 프로젝트 빌드
+### 프로젝트 빌드
 
-1. 프로젝트 클론
+#### 1. 프로젝트 클론
 ```bash
 $ git clone https://github.com/Sehun-Kim/java-notice.git
 $ cd java-notice
 ```
 
-2. 프로젝트 빌드, 실행
-- build jar
+#### 2. 프로젝트 빌드, 실행
+- **build jar**
 ```bash
 $ ./gradlew build -x test
 $ chmod 755 build/libs/notice-java-1.0.0.jar
 $ java -jar build/libs/notice-java-1.0.0.jar
 ```
 
-- use gradle
+- **use gradle**
 ```bash
 $ ./gradlew bootRun
 ```
 
-3. 프로젝트 접속
-
+#### 3. 프로젝트 접속
 - url : `http://localhost:8080` 접속
 - DB : `http://localhost:8080/h2-console/` 접속
 ```
@@ -67,11 +76,10 @@ $ ./gradlew bootRun
 2) Connect
 ```
 
-4. 서버 종료
+#### 4. 서버 종료
+- `ctrl + c`
 
-`ctrl + c`
-
-#### Test 코드 실행
+### Test 코드 실행
 > ATDD
 
 - `application.properties`의 ***profile***과 ***import sql*** 주석 해제
@@ -85,11 +93,4 @@ spring.jpa.properties.hibernate.hbm2ddl.import_files=test.sql
 
 - IntelliJ 혹은 STS IDE를 사용하여 JUnit 테스트 코드 실행
 
----
-## 구현 기능
 
-- 회원가입, 로그인/로그아웃
-- 공지사항 조회(회원/비회원)
-- 공지사항 등록(회원)
-- 공지사항 수정,삭제(작성자)
-- 페이징
