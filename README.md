@@ -40,9 +40,11 @@
 - JUnit 4, logback
 - Spring-Boot 2.1.1 RELEASE
 - Spring Data JPA/Hibernate
+- H2 Database
+- Handlebars
 - Bootstrap 4.2.1
 - jQuery 3.3.1
-- H2 DATABASE
+
 
 ---
 ## 프로젝트 빌드, 실행방법
@@ -69,20 +71,21 @@ $ ./gradlew bootRun
 ```
 
 #### 3. 프로젝트 접속
-- url : `http://localhost:8080` 접속
-- DB : `http://localhost:8080/h2-console/` 접속
+- Project url : `http://localhost:8080` 접속
+- DB url : `http://localhost:8080/h2-console/` 접속
 ```
-1) JDBC URL : jdbc:h2:mem://localhost/~/javanotice; 설정
-2) Connect
+1) JDBC URL 설정 : jdbc:h2:mem://localhost/~/javanotice;
+2) Connect 클릭
 ```
 
 #### 4. 서버 종료
 - `ctrl + c`
 
 ### Test 코드 실행
-> ATDD
+> Acceptance Test, UnitTest
 
-- `application.properties`의 ***profile***과 ***import sql*** 주석 해제
+
+1. `application.properties`의 ***profile*** 과 ***import sql*** 주석 해제
 ```properties
 # profile
 spring.profiles.active=test
@@ -91,6 +94,16 @@ spring.profiles.active=test
 spring.jpa.properties.hibernate.hbm2ddl.import_files=test.sql
 ```
 
-- IntelliJ 혹은 STS IDE를 사용하여 JUnit 테스트 코드 실행
+2. logging level setting
+
+logback.xml 설정 변경
+> INFO -> DEBUG
+```xml
+<logger name="com.assignment.rsupport.noticejava" level="DEBUG"/>
+<logger name="com.assignment.rsupport.support" level="DEBUG"/>
+```
+
+
+3. IntelliJ 혹은 STS IDE를 사용하여 JUnit 테스트 코드 실행
 
 
